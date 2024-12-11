@@ -186,3 +186,16 @@ g_revolution_crafting_items = {
         }
 	}
 }
+
+
+if g_rev_major == nil or g_rev_minor < 4 then
+	-- revolution 1.4 is not installed, tell the user
+	update_screen_overrides = function(screen_w, screen_h, ticks)
+		update_ui_text(20, 20, "Engineering needs Revolution mod 1.4+",
+				110, 0, color_white, 0)
+		return false
+	end
+end
+if g_rev_mods ~= nil then
+	table.insert(g_rev_mods, "Engineering")
+end
