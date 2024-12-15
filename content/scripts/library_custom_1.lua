@@ -113,6 +113,9 @@ function custom_vehicle_loadout_update(screen_w, screen_h, ticks)
 				g_prompt_upgrade_vehicle = nil
 				if update_get_is_focus_local() then
 					-- do the upgrade
+					for anum, _ in pairs(upgrade_option.options) do
+						carrier:set_attached_vehicle_attachment(g_selected_bay_index, anum, -1)
+					end
 					for anum, adef in pairs(upgrade_option.attachments) do
 						carrier:set_attached_vehicle_attachment(g_selected_bay_index, anum, adef)
 					end
