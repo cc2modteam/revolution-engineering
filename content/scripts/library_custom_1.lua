@@ -116,6 +116,13 @@ function custom_vehicle_loadout_update(screen_w, screen_h, ticks)
 					for anum, adef in pairs(upgrade_option.attachments) do
 						carrier:set_attached_vehicle_attachment(g_selected_bay_index, anum, adef)
 					end
+					-- "spend" the fuel
+					for inv_item, inv_count in pairs(upgrade_option.cost) do
+						if inv_item == e_inventory_item.fuel_barrel then
+							carrier:set_inventory_order(inv_item, inv_count, e_carrier_order_operation.delete)
+						end
+					end
+					sanitise_loadout(carrier, g_selected_bay_index)
 				end
 			end
 
@@ -133,6 +140,10 @@ end
 function custom_ui_vehicle_loadout_chassis(ui, vehicle)
 	local opt, fitted = rev_get_custom_upgrade_option(vehicle)
 	if opt ~= nil then
+		if not fitted then
+			local carrier = get_managed_vehicle()
+			sanitise_loadout(carrier, g_selected_bay_index)
+		end
 		rev_custom_button(ui, "REFIT",
 				4, 72, 47, 18, not fitted, function()
 					if vehicle and vehicle:get() then
