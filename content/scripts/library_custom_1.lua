@@ -99,7 +99,8 @@ function custom_vehicle_loadout_update(screen_w, screen_h, ticks)
 			ui:text_basic(upgrade_option.details)
 			ui:text_basic("COST:")
 			local has_reqs = true
-			for inv_item, inv_count in pairs(upgrade_option.cost) do
+			local costs = upgrade_option.cost
+			for inv_item, inv_count in pairs(costs) do
 				local has_count = carrier:get_inventory_count_by_item_index(inv_item)
 				local col = color_grey_dark
 				if has_count < inv_count then
@@ -200,6 +201,7 @@ g_revolution_crafting_items = {
 		name="Specops Petrel",
 		details="Flare & Virus",
         chassis=e_game_object_type.chassis_air_rotor_heavy,
+		min_attachments=6,
         attachments={
             [4] = e_game_object_type.attachment_turret_robot_dog_capsule,
 		},
@@ -241,6 +243,7 @@ g_revolution_crafting_items = {
 		name="Manta F2",
 		details="Extra missiles",
 		chassis=e_game_object_type.chassis_air_wing_heavy,
+		min_attachments=11,
 		attachments={
 			[10] = e_game_object_type.attachment_camera_observation,
 		},
@@ -276,6 +279,37 @@ g_revolution_crafting_items = {
 		cost={
             [e_inventory_item.fuel_barrel] = 2,
 			[e_inventory_item.attachment_camera_observation] = 1
+        }
+	},
+	{
+		name="Koala",
+		details="Anti-Air system",
+		chassis=e_game_object_type.chassis_land_wheel_heavy,
+		min_attachments=10,
+		attachments={
+			[2] = e_game_object_type.attachment_radar_golfball
+		},
+		options={
+			[2] = {e_game_object_type.attachment_radar_golfball},
+			[4] = g__crafting_aa_reduced_wing,
+			[5] = g__crafting_aa_reduced_wing,
+			[6] = g__crafting_aa_reduced_wing,
+			[7] = g__crafting_aa_reduced_wing,
+			[8] = g__crafting_aa_reduced_wing,
+		},
+		rows={
+			{
+				{ i=2, x=0, y=-25 },
+				{ i=4, x=-14, y=-6 },
+				{ i=5, x=0, y=-6 },
+				{ i=6, x=14, y=-6 },
+				{ i=7, x=-14, y=20 },
+				{ i=8, x=14, y=20 },
+			}
+		},
+	    cost={
+            [e_inventory_item.fuel_barrel] = 4,
+			[e_inventory_item.attachment_radar_golfball] = 1,
         }
 	}
 }
