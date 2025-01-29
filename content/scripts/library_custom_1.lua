@@ -50,16 +50,19 @@ function rev_get_custom_upgrade_option(vehicle)
 			if value.chassis == def then
 				-- if a special option isnt fitted
 				local fitted = false
-				for anum, adef in pairs(value.attachments) do
-					local a = vehicle:get_attachment(anum)
-					if a and a:get() then
-						local a_fitted = a:get_definition_index()
-						if a_fitted == adef then
-							fitted = true
+				local acount = vehicle:get_attachment_count()
+				if acount == value.min_attachments then
+					for anum, adef in pairs(value.attachments) do
+						local a = vehicle:get_attachment(anum)
+						if a and a:get() then
+							local a_fitted = a:get_definition_index()
+							if a_fitted == adef then
+								fitted = true
+							end
 						end
 					end
+					return value, fitted
 				end
-				return value, fitted
 			end
 		end
 	end
@@ -187,16 +190,6 @@ local g__crafting_flare_wing = {
 }
 
 g_revolution_crafting_items = {
-    -- Guardian Petrel
-    --  - 1 flare launcher
-    --  - 1 sonic pulse
-    --  - 1 golfball radar
-    --  - 1 torpedo_noisemaker
-    --  - 1 tv missile
-    --  - unable to airlift
-    -- cost:
-    --  - 1x razorbill
-    --  - 1x flare launcher
     {
 		name="Specops Petrel",
 		details="Flare & Virus",
@@ -310,6 +303,37 @@ g_revolution_crafting_items = {
 	    cost={
             [e_inventory_item.fuel_barrel] = 4,
 			[e_inventory_item.attachment_radar_golfball] = 1,
+        }
+	},
+	{
+		name="Hinny",
+		details="Mobile LGM Silo",
+		chassis=e_game_object_type.chassis_land_wheel_mule,
+		min_attachments=7,
+		attachments={
+			[1] = e_game_object_type.attachment_camera_observation
+		},
+		options={
+			[1] = {e_game_object_type.attachment_camera_observation},
+			[2] = {e_game_object_type.attachment_hardpoint_missile_laser},
+			[3] = {e_game_object_type.attachment_hardpoint_missile_laser},
+			[4] = {e_game_object_type.attachment_hardpoint_missile_laser},
+			[5] = {e_game_object_type.attachment_hardpoint_missile_laser},
+			[6] = {e_game_object_type.attachment_hardpoint_missile_laser},
+		},
+		rows={
+			{
+				{ i=1, x=-10, y=-21 },
+				{ i=2, x=10, y=-21 },
+				{ i=3, x=-10, y=-5 },
+				{ i=4, x=10, y=-5 },
+				{ i=5, x=-10, y=11 },
+				{ i=6, x=10, y=11 },
+			}
+		},
+	    cost={
+            [e_inventory_item.fuel_barrel] = 2,
+			[e_inventory_item.attachment_camera_observation] = 1,
         }
 	}
 }
