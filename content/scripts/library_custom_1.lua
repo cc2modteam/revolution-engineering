@@ -278,7 +278,7 @@ g_revolution_crafting_items = {
 		name="Koala",
 		details="Anti-Air system",
 		chassis=e_game_object_type.chassis_land_wheel_heavy,
-		min_attachments=10,
+		min_attachments=9,
 		attachments={
 			[2] = e_game_object_type.attachment_radar_golfball
 		},
